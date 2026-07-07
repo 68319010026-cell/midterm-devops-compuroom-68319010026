@@ -18,3 +18,5 @@
 ```bash
 git clone [https://github.com/68319010026-cell/midterm-devops-compuroom-68319010026.git](https://github.com/68319010026-cell/midterm-devops-compuroom-68319010026.git)
 cd midterm-devops-compuroom-68319010026
+
+* **Status:** Midterm Project Completed.
