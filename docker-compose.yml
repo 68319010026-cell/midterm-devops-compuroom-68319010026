@@ -1,0 +1,42 @@
+
+services:
+  # 1. ตู้เซฟฐานข้อมูล
+  db:
+    image: postgres:15-alpine
+    container_name: compuroom-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: compuroom
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql # สั่งให้รันไฟล์สร้างตารางตอนเปิดตู้เซฟครั้งแรก
+
+  # 2. สมองหลังบ้าน (Backend)
+  backend:
+    build: ./backend
+    container_name: compuroom-api
+    ports:
+      - "5000:5000"
+    environment:
+      DB_HOST: db
+      DB_USER: postgres
+      DB_PASSWORD: password123
+      DB_NAME: compuroom
+      DB_PORT: 5432
+    depends_on:
+      - db
+
+  # 3. หน้าจอหน้าบ้าน (Frontend)
+  frontend:
+    build: ./frontend
+    container_name: compuroom-web
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  db-data: # กำหนด Volume เพื่อล็อกข้อมูลไว้ไม่ให้หายตอนปิด Container (ตามเกณฑ์ข้อบังคับ)
