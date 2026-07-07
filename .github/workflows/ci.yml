@@ -1,9 +1,12 @@
 name: CI Pipeline
 
-# 1. Trigger เมื่อ push ไป develop / feature/* และเมื่อเปิด Pull Request เข้า main
+name: CI Pipeline
+
+# สั่งให้ทำงานเมื่อมีการ push ไปที่ main, develop หรือ feature/*
 on:
   push:
     branches:
+      - main
       - develop
       - 'feature/*'
   pull_request:
